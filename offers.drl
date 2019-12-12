@@ -6,20 +6,26 @@ rule "Offer for HNB credit card"
 	when
 		offerObject: PaymentOffer(channel=="hnb")
 	then
-		offerObject.setDiscount(20);
+		offerObject.setDiscount(25);
 	end
 	
 rule "Offer for HSBC credit card"
 	when
 		offerObject: PaymentOffer(channel=="hsbc")
 	then
-		offerObject.setDiscount(10);
+		offerObject.setDiscount(20);
 	end
 rule "Offer for NDB credit card"
 	when
 		offerObject: PaymentOffer(channel=="ndb")
 	then
-		offerObject.setDiscount(5);
+		offerObject.setDiscount(15);
+	end
+rule "Offer for NTB credit card"
+	when
+		offerObject: PaymentOffer(channel=="ntb")
+	then
+		offerObject.setDiscount(10);
 	end
 	
 	
