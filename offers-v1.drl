@@ -4,26 +4,26 @@ import org.cohere.sample.PaymentOffer
 
 rule "Offer for HNB credit card"
 	when
-		offerObject: PaymentOffer(channel=="hnb")
+		offerObject: PaymentOffer(channel=="hnb" && age == 18)
 	then
 		offerObject.setDiscount(25);
 	end
 	
 rule "Offer for HSBC credit card"
 	when
-		offerObject: PaymentOffer(channel=="hsbc")
+		offerObject: PaymentOffer(channel=="hsbc" && age == 20)
 	then
 		offerObject.setDiscount(20);
 	end
 rule "Offer for NDB credit card"
 	when
-		offerObject: PaymentOffer(channel=="ndb")
+		offerObject: PaymentOffer(channel=="ndb" && age == 22)
 	then
 		offerObject.setDiscount(15);
 	end
 rule "Offer for NTB credit card"
 	when
-		offerObject: PaymentOffer(channel=="ntb")
+		offerObject: PaymentOffer(channel=="ntb" && age == 24)
 	then
 		offerObject.setDiscount(10);
 	end
