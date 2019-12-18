@@ -1,0 +1,39 @@
+package rules
+
+import com.cohere.carepath.rules.services.domain.RulesContext;
+import com.cohere.carepath.rules.services.platform.common.Status;
+
+/*
+* Tendon-Tear: PT
+*/
+
+rule "Collect PT params"
+	activation-group "Tendon-Tear: PT" // makes rules mutually exclusive(XOR)
+    when
+        ctx: RulesContext(service == "PT");
+        and RulesContext(getMetric("performActiveExtensionOfKnee") == null || getMetric("performDailyActivities") == null);
+    then
+    	ctx.collectMetrics("performActiveExtensionOfKnee", "performDailyActivities");
+    	ctx.setStatus(Status.INCOMPLETE);
+    	System.out.println("PT: requires more");
+end
+
+rule "Evaluate PT params for valid Auth"
+	activation-group "Tendon-Tear: PT"
+    when
+        ctx: RulesContext(service == "PT", getMetric("performActiveExtensionOfKnee") == "no", getMetric("performDailyActivities") == "yes");
+    then
+        ctx.setStatus(Status.APPROVED);
+		System.out.println("PT: approved");
+end
+
+
+// all other non-matching PT rules
+rule "Evaluate PT params for invalid Auth"
+	activation-group "Tendon-Tear: PT"
+    when
+        ctx: RulesContext(service == "PT");
+    then
+        ctx.setStatus(Status.PENDING);
+		System.out.println("PT: pending");
+end
